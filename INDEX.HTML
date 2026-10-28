@@ -1,0 +1,307 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Giovanna Beauty | Loja Virtual</title>
+<style>
+:root {
+  --rosa:#f5dce7;
+  --rosa-forte:#d979a2;
+  --lilas:#e9e0f8;
+  --creme:#fffaf5;
+  --texto:#493744;
+  --card:#ffffff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:var(--creme);color:var(--texto);transition:.3s}
+body.dark{--creme:#211c27;--texto:#f8eaf4;--card:#302638;--rosa:#493044;--lilas:#40334f}
+header{background:var(--card);padding:18px 6%;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;box-shadow:0 3px 15px #0000000c;position:sticky;top:0;z-index:10}
+.logo{font-size:25px;font-weight:bold;color:var(--rosa-forte)}
+.logo span{display:block;font-size:11px;letter-spacing:4px;text-align:center}
+nav{display:flex;gap:18px;flex-wrap:wrap}
+nav a{color:var(--texto);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--rosa-forte)}
+.actions{display:flex;gap:8px;align-items:center}
+button,input,select{font:inherit}
+button{cursor:pointer;border:none;border-radius:25px;padding:11px 16px}
+.icon-btn{background:var(--lilas);color:var(--texto)}
+.hero{margin:25px auto;width:90%;min-height:310px;border-radius:25px;background:linear-gradient(120deg,#f7dce8,#e7def9,#fff0d9);display:flex;align-items:center;justify-content:space-between;gap:20px;padding:45px 7%;overflow:hidden}
+.hero h1{font-size:clamp(30px,4vw,48px);color:#6b4261;margin:15px 0}
+.hero p{max-width:450px;line-height:1.7;color:#654e60}
+.hero img{width:36%;max-width:340px;height:240px;object-fit:cover;border-radius:20px;box-shadow:0 12px 30px #75506a30}
+.pill{display:inline-block;background:#ffffffaa;padding:8px 14px;border-radius:20px;font-size:12px}
+.primary{background:var(--rosa-forte);color:white;margin-top:18px}
+section{padding:35px 6%}
+.section-heading{text-align:center;margin-bottom:25px}
+.section-heading h2{font-size:29px;margin-bottom:8px}
+.section-heading p{opacity:.75}
+.tools{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:20px 0 28px}
+.tools input,.tools select{padding:12px 15px;border:1px solid #e7d7e2;border-radius:25px;background:var(--card);color:var(--texto);min-width:190px}
+.categories{display:flex;justify-content:center;flex-wrap:wrap;gap:9px;margin-bottom:25px}
+.category{background:var(--lilas);color:var(--texto)}
+.category.active{background:var(--rosa-forte);color:white}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px}
+.product{background:var(--card);border-radius:18px;overflow:hidden;box-shadow:0 5px 20px #4b30410d;transition:.25s;position:relative}
+.product:hover{transform:translateY(-5px);box-shadow:0 10px 25px #4b30411a}
+.product img{width:100%;height:205px;object-fit:cover;background:var(--rosa)}
+.product-info{padding:15px}
+.tag{font-size:10px;background:var(--lilas);padding:6px 9px;border-radius:20px;display:inline-block;margin-bottom:10px}
+.product h3{font-size:15px;min-height:36px;line-height:1.4}
+.description{font-size:12px;opacity:.7;line-height:1.5;margin:7px 0}
+.price{font-size:19px;font-weight:bold;color:var(--rosa-forte);margin:12px 0}
+.old-price{text-decoration:line-through;opacity:.5;font-size:12px;margin-left:5px}
+.add{width:100%;background:var(--rosa-forte);color:white}
+.add:hover,.primary:hover{filter:brightness(.95)}
+.no-results{text-align:center;grid-column:1/-1;padding:35px}
+.benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.benefit{background:var(--card);padding:25px;border-radius:18px;text-align:center;line-height:1.8}
+.benefit strong{display:block;margin-bottom:5px}
+footer{background:var(--rosa);padding:35px 6%;text-align:center;line-height:2}
+footer a{color:var(--texto);margin:0 8px}
+.cart-panel{position:fixed;right:0;top:0;height:100vh;width:min(390px,100%);background:var(--card);z-index:30;box-shadow:-8px 0 30px #0002;padding:25px;transform:translateX(110%);transition:.3s;overflow:auto}
+.cart-panel.open{transform:translateX(0)}
+.cart-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.cart-item{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid #ddd5}
+.cart-item img{width:65px;height:65px;object-fit:cover;border-radius:10px}
+.cart-item-info{flex:1;font-size:13px;line-height:1.7}
+.qty{display:flex;align-items:center;gap:9px}
+.qty button{padding:5px 10px;background:var(--lilas)}
+.total{font-size:21px;font-weight:bold;margin:22px 0}
+.checkout{width:100%;background:#8dba9a;color:white}
+.close{background:var(--lilas)}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:700px){header{justify-content:center}nav{justify-content:center}.hero{flex-direction:column;text-align:center;padding:30px 20px}.hero img{width:100%;height:190px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.product img{height:155px}.product-info{padding:11px}.product h3{font-size:13px}.benefits{grid-template-columns:1fr}section{padding:28px 4%}}
+@media(max-width:380px){.grid{grid-template-columns:1fr}.product img{height:220px}}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="#" style="text-decoration:none">Giovanna Beauty<span>BELEZA & CARINHO</span></a>
+  <nav>
+    <a href="#">Início</a>
+    <a href="#produtos">Produtos</a>
+    <a href="#beneficios">Benefícios</a>
+    <a href="#contato">Contato</a>
+  </nav>
+  <div class="actions">
+    <button class="icon-btn" onclick="toggleTheme()" aria-label="Alternar tema">🌙</button>
+    <button class="icon-btn" onclick="toggleCart()">🛍️ Carrinho (<span id="cartCount">0</span>)</button>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <div>
+      <span class="pill">✨ SUA BELEZA, SEU JEITO</span>
+      <h1>Seu momento de<br>beleza começa aqui!</h1>
+      <p>Descubra maquiagens, skincare, perfumes e acessórios escolhidos com muito carinho para você.</p>
+      <a href="#produtos"><button class="primary">Explorar produtos ♡</button></a>
+    </div>
+    <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=700&q=85" alt="Produtos de beleza">
+  </div>
+
+  <section id="produtos">
+    <div class="section-heading">
+      <h2>Nossa coleção ♡</h2>
+      <p>Encontre seus novos favoritos entre nossos produtos.</p>
+    </div>
+
+    <div class="tools">
+      <input id="search" type="search" placeholder="🔎 Buscar produto..." oninput="renderProducts()">
+      <select id="sort" onchange="renderProducts()">
+        <option value="default">Ordenar por</option>
+        <option value="low">Menor preço</option>
+        <option value="high">Maior preço</option>
+        <option value="name">Nome A–Z</option>
+      </select>
+    </div>
+
+    <div class="categories" id="categories"></div>
+    <p id="resultCount" style="text-align:center;margin-bottom:20px;font-size:13px"></p>
+    <div class="grid" id="productGrid"></div>
+  </section>
+
+  <section id="beneficios">
+    <div class="section-heading">
+      <h2>Comprar com carinho ♡</h2>
+      <p>Uma experiência pensada para você.</p>
+    </div>
+    <div class="benefits">
+      <div class="benefit"><strong>🎀 Produtos selecionados</strong>Uma coleção variada para seus cuidados diários.</div>
+      <div class="benefit"><strong>💌 Atendimento especial</strong>Estamos aqui para ajudar você a escolher.</div>
+      <div class="benefit"><strong>✨ Seu estilo importa</strong>Beleza e acessórios para todos os momentos.</div>
+    </div>
+  </section>
+</main>
+
+<footer id="contato">
+  <h2>Giovanna Beauty ♡</h2>
+  <p>Seu cantinho favorito de beleza e autocuidado.</p>
+  <p><a href="#produtos">Produtos</a> · <a href="#beneficios">Sobre a loja</a> · <a href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a></p>
+  <p>Contato: contato@giovannabeauty.com</p>
+  <small>© 2026 Giovanna Beauty. Todos os direitos reservados.</small>
+</footer>
+
+<aside class="cart-panel" id="cartPanel" aria-label="Carrinho de compras">
+  <div class="cart-top">
+    <h2>Seu carrinho 🛍️</h2>
+    <button class="close" onclick="toggleCart()">✕</button>
+  </div>
+  <div id="cartItems"></div>
+  <div class="total">Total: <span id="cartTotal">R$ 0,00</span></div>
+  <button class="checkout" onclick="checkout()">Finalizar pedido pelo WhatsApp</button>
+  <p style="font-size:12px;opacity:.7;margin-top:12px">Configure o número da loja no JavaScript para receber pedidos.</p>
+</aside>
+
+<script>
+const products = [
+ {id:1,name:"Gloss Labial Rosé",category:"Maquiagem",price:24.90,tag:"Queridinho",desc:"Brilho delicado e acabamento confortável.",img:"photo-1631214540242-5b5d6e1b8f8c"},
+ {id:2,name:"Batom Nude",category:"Maquiagem",price:29.90,tag:"Clássico",desc:"Cor elegante para qualquer ocasião.",img:"photo-1586495777744-4413f21062fa"},
+ {id:3,name:"Paleta de Sombras",category:"Maquiagem",price:59.90,tag:"Mais vendido",desc:"Tons versáteis para criar vários looks.",img:"photo-1512496015851-a90fb38ba796"},
+ {id:4,name:"Blush Rosado",category:"Maquiagem",price:32.90,tag:"Favorito",desc:"Um toque de cor para iluminar o rosto.",img:"photo-1596704017254-9b121068fb31"},
+ {id:5,name:"Máscara de Cílios",category:"Maquiagem",price:34.90,tag:"Essencial",desc:"Realce o olhar na sua rotina.",img:"photo-1631214540242-5b5d6e1b8f8c"},
+ {id:6,name:"Base Líquida",category:"Maquiagem",price:49.90,tag:"Novidade",desc:"Cobertura para uma pele uniforme.",img:"photo-1522335789203-aabd1fc54bc9"},
+ {id:7,name:"Corretivo Facial",category:"Maquiagem",price:27.90,tag:"Essencial",desc:"Ideal para complementar sua maquiagem.",img:"photo-1512496015851-a90fb38ba796"},
+ {id:8,name:"Pó Compacto",category:"Maquiagem",price:35.90,tag:"Favorito",desc:"Acabamento suave para o dia a dia.",img:"photo-1596462502278-27bfdc403348"},
+ {id:9,name:"Sérum Facial",category:"Skincare",price:45.90,tag:"Autocuidado",desc:"Um passo especial na rotina de cuidados.",img:"photo-1608248543803-ba4f8c70ae0b"},
+ {id:10,name:"Hidratante Facial",category:"Skincare",price:39.90,tag:"Hidratação",desc:"Cuidado diário para a pele.",img:"photo-1556229010-6c3f2c9ca5f8"},
+ {id:11,name:"Protetor Solar",category:"Skincare",price:54.90,tag:"Indispensável",desc:"Inclua proteção solar na rotina.",img:"photo-1556228720-195a672e8a03"},
+ {id:12,name:"Água Micelar",category:"Skincare",price:28.90,tag:"Limpeza",desc:"Para complementar a limpeza facial.",img:"photo-1608248543803-ba4f8c70ae0b"},
+ {id:13,name:"Máscara Facial",category:"Skincare",price:19.90,tag:"Spa em casa",desc:"Reserve um momento para se cuidar.",img:"photo-1570172619644-dfd03ed5d881"},
+ {id:14,name:"Perfume Floral",category:"Perfumes",price:89.90,tag:"Elegante",desc:"Fragrância delicada para o dia a dia.",img:"photo-1541643600914-78b084683601"},
+ {id:15,name:"Body Splash",category:"Perfumes",price:42.90,tag:"Levinho",desc:"Perfume suave para reaplicar quando quiser.",img:"photo-1594035910387-fea47794261f"},
+ {id:16,name:"Óleo Capilar",category:"Cabelos",price:36.90,tag:"Brilho",desc:"Um cuidado extra para os fios.",img:"photo-1608248543803-ba4f8c70ae0b"},
+ {id:17,name:"Máscara Capilar",category:"Cabelos",price:41.90,tag:"Tratamento",desc:"Momento de cuidado para o cabelo.",img:"photo-1527799820374-dcf8d9d4a388"},
+ {id:18,name:"Presilha de Laço",category:"Acessórios",price:14.90,tag:"Fofo",desc:"Um detalhe charmoso para seu penteado.",img:"photo-1529139574466-a303027c1d8b"},
+ {id:19,name:"Bolsa Pequena",category:"Acessórios",price:79.90,tag:"Estilosa",desc:"Um acessório para completar seu look.",img:"photo-1584917865442-de89df76afd3"},
+ {id:20,name:"Óculos de Sol",category:"Acessórios",price:49.90,tag:"Fashion",desc:"Um toque moderno para seu visual.",img:"photo-1511499767150-a48a237f0083"}
+];
+
+const categories = ["Todos","Maquiagem","Skincare","Perfumes","Cabelos","Acessórios"];
+let selectedCategory = "Todos";
+let cart = JSON.parse(localStorage.getItem("giovannaCart") || "[]");
+
+const money = value => value.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+
+function photo(id){
+ return `https://images.unsplash.com/${id}?auto=format&fit=crop&w=600&q=80`;
+}
+
+function renderCategories(){
+ document.getElementById("categories").innerHTML = categories.map(c =>
+ `<button class="category ${selectedCategory===c?"active":""}" onclick="setCategory('${c}')">${c}</button>`
+ ).join("");
+}
+
+function setCategory(category){
+ selectedCategory = category;
+ renderCategories();
+ renderProducts();
+}
+
+function renderProducts(){
+ const term = document.getElementById("search").value.toLowerCase();
+ const sort = document.getElementById("sort").value;
+
+ let list = products.filter(p =>
+ (selectedCategory==="Todos" || p.category===selectedCategory) &&
+ (p.name.toLowerCase().includes(term) ||
+  p.category.toLowerCase().includes(term) ||
+  p.desc.toLowerCase().includes(term))
+ );
+
+ if(sort==="low") list.sort((a,b)=>a.price-b.price);
+ if(sort==="high") list.sort((a,b)=>b.price-a.price);
+ if(sort==="name") list.sort((a,b)=>a.name.localeCompare(b.name,"pt-BR"));
+
+ document.getElementById("resultCount").textContent = `${list.length} produto(s) encontrado(s)`;
+
+ document.getElementById("productGrid").innerHTML = list.length ? list.map(p => `
+ <article class="product">
+   <img src="${photo(p.img)}" alt="${p.name}" loading="lazy">
+   <div class="product-info">
+     <span class="tag">${p.tag}</span>
+     <h3>${p.name}</h3>
+     <p class="description">${p.desc}</p>
+     <div class="price">${money(p.price)}</div>
+     <button class="add" onclick="addToCart(${p.id})">Adicionar ao carrinho ♡</button>
+   </div>
+ </article>
+ `).join("") : '<div class="no-results">Nenhum produto encontrado. Tente outra busca. ♡</div>';
+}
+
+function addToCart(id){
+ const item = cart.find(p=>p.id===id);
+ if(item) item.qty++;
+ else cart.push({...products.find(p=>p.id===id),qty:1});
+ saveCart();
+}
+
+function changeQty(id,change){
+ const item = cart.find(p=>p.id===id);
+ if(!item) return;
+ item.qty += change;
+ cart = cart.filter(p=>p.qty>0);
+ saveCart();
+}
+
+function saveCart(){
+ localStorage.setItem("giovannaCart",JSON.stringify(cart));
+ renderCart();
+}
+
+function renderCart(){
+ document.getElementById("cartCount").textContent = cart.reduce((sum,p)=>sum+p.qty,0);
+ document.getElementById("cartItems").innerHTML = cart.length ? cart.map(p=>`
+ <div class="cart-item">
+   <img src="${photo(p.img)}" alt="${p.name}">
+   <div class="cart-item-info">
+     <strong>${p.name}</strong><br>${money(p.price)}
+     <div class="qty">
+       <button onclick="changeQty(${p.id},-1)">−</button>
+       <span>${p.qty}</span>
+       <button onclick="changeQty(${p.id},1)">+</button>
+     </div>
+   </div>
+ </div>
+ `).join("") : "<p>Seu carrinho está vazio. Que tal escolher algo especial? ♡</p>";
+
+ document.getElementById("cartTotal").textContent =
+ money(cart.reduce((sum,p)=>sum+p.price*p.qty,0));
+}
+
+function toggleCart(){
+ document.getElementById("cartPanel").classList.toggle("open");
+}
+
+function toggleTheme(){
+ document.body.classList.toggle("dark");
+}
+
+function checkout(){
+ if(!cart.length){
+   alert("Adicione pelo menos um produto ao carrinho!");
+   return;
+ }
+
+ const phone = "5500000000000"; // Troque pelo WhatsApp da loja com DDI e DDD
+ const lines = cart.map(p=>`${p.qty}x ${p.name} - ${money(p.price*p.qty)}`);
+ const total = cart.reduce((sum,p)=>sum+p.price*p.qty,0);
+ const message = `Olá, Giovanna! Quero fazer este pedido:\n\n${lines.join("\n")}\n\nTotal: ${money(total)}`;
+
+ if(phone==="5500000000000"){
+   alert("Configure o número do WhatsApp da loja no código antes de finalizar o pedido.");
+   return;
+ }
+ window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`,"_blank");
+}
+
+renderCategories();
+renderProducts();
+renderCart();
+</script>
+</body>
+</html>
